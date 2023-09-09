@@ -6,8 +6,8 @@ import java.awt.event.ActionListener;
 public class LoginPage {
 
     private JFrame frame;
-    private JTextField usernameField;
     private JPasswordField passwordField;
+    private JTextField textField;
 
     public LoginPage() {
         initialize();
@@ -15,31 +15,37 @@ public class LoginPage {
 
     private void initialize() {
         frame = new JFrame("Login Page");
+        frame.getContentPane().setForeground(UIManager.getColor("Button.highlight"));
+        frame.getContentPane().setBackground(UIManager.getColor("Button.foreground"));
         frame.setBounds(100, 100, 450, 300);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.getContentPane().setLayout(null);
 
         JLabel lblUsername = new JLabel("Username:");
-        lblUsername.setBounds(50, 50, 80, 14);
+        lblUsername.setForeground(UIManager.getColor("Button.highlight"));
+        lblUsername.setBounds(50, 96, 80, 14);
         frame.getContentPane().add(lblUsername);
+        
+        textField = new JTextField();
+        textField.setColumns(10);
+        textField.setBounds(142, 81, 215, 44);
+        frame.getContentPane().add(textField);
 
         JLabel lblPassword = new JLabel("Password:");
-        lblPassword.setBounds(50, 80, 80, 14);
+        lblPassword.setForeground(UIManager.getColor("Button.highlight"));
+        lblPassword.setBounds(50, 153, 80, 14);
         frame.getContentPane().add(lblPassword);
 
-        usernameField = new JTextField();
-        usernameField.setBounds(140, 50, 200, 20);
-        frame.getContentPane().add(usernameField);
-        usernameField.setColumns(10);
-
         passwordField = new JPasswordField();
-        passwordField.setBounds(140, 80, 200, 20);
+        passwordField.setBounds(142, 137, 220, 46);
         frame.getContentPane().add(passwordField);
 
         JButton btnLogin = new JButton("Login");
+        btnLogin.setForeground(UIManager.getColor("Button.highlight"));
+        btnLogin.setBackground(UIManager.getColor("Button.shadow"));
         btnLogin.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                String username = usernameField.getText();
+                String username = textField.getText();
                 String password = new String(passwordField.getPassword());
 
                 if (isValidLogin(username, password)) {
@@ -50,8 +56,15 @@ public class LoginPage {
                 }
             }
         });
-        btnLogin.setBounds(140, 110, 89, 23);
+        btnLogin.setBounds(195, 207, 89, 23);
         frame.getContentPane().add(btnLogin);
+        
+        JLabel lblNewLabel = new JLabel("Wellcome Back!");
+        lblNewLabel.setFont(new Font("Lucida Grande", Font.BOLD, 20));
+        lblNewLabel.setBackground(UIManager.getColor("Button.select"));
+        lblNewLabel.setForeground(UIManager.getColor("Button.highlight"));
+        lblNewLabel.setBounds(140, 24, 231, 31);
+        frame.getContentPane().add(lblNewLabel);
     }
 
     private boolean isValidLogin(String username, String password) {
@@ -67,9 +80,9 @@ public class LoginPage {
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    AfterLoginPage afterLoginPage = new AfterLoginPage();
+                    AfterLoginPage authPage = new AfterLoginPage();
                     
-                    afterLoginPage.showPage();
+                    authPage.showPage();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

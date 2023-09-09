@@ -7,231 +7,164 @@ import java.util.Random;
 
 public class AfterLoginPage {
 
-    private JFrame frame;
-    private JTable table;
-    private JPanel menuPanel;
-    private JPanel contentPanel;
-    private JPanel showDistrictPanel; // Panel for the "Show District" table
-    private JPanel addDistrictPanel;
-    
-    DefaultTableModel model = new DefaultTableModel() {
-        private static final long serialVersionUID = 1L;
+	private JFrame frame;
+	private JPanel menuPanel;
+	private JPanel contentPanel;
+	private DefaultTableModel tableDataModel;
+	private DefaultTableModel upazillaTableModel;
+//    private JPanel addDistrictPanel;
 
-        @Override
-        public boolean isCellEditable(int row, int column) {
-            return false; // Make all cells non-editable
-        }
-    };
-    
-    public AfterLoginPage() {
-        initialize();
-    }
+	public AfterLoginPage() {
+		initialize();
 
-    private void initialize() {
-        frame = new JFrame("After Login Page");
-        contentPanel = new JPanel(new CardLayout());
-        frame.setBounds(100, 100, 800, 600);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.getContentPane().setLayout(new BorderLayout());
-        
-        
-        frame.getContentPane().add(contentPanel, BorderLayout.CENTER);
-
-        // Create a menu panel with buttons for different actions
-        menuPanel = new JPanel(new FlowLayout());
-
-        JButton addDistrictButton = new JButton("Add District");
-        addDistrictButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-            	showAddDistrictPanel();
- }
-        });
-        menuPanel.add(addDistrictButton);
-
-        JButton showDistrictButton = new JButton("Show District");
-        showDistrictButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-
-                System.out.println("Pressed Add District");
-                showDistrictPanel();
-   
-            }
-        });
-        menuPanel.add(showDistrictButton);
-
-
-        JButton addUpazillaButton = new JButton("Add Upazilla");
-        addUpazillaButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                // Implement the logic to add an upazilla here
-            }
-        });
-        menuPanel.add(addUpazillaButton);
-
-        JButton showUpazillaButton = new JButton("Show Upazilla");
-        showUpazillaButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                // Implement the logic to show upazillas here
-            }
-        });
-        menuPanel.add(showUpazillaButton);
-
-        JButton addEmployeeButton = new JButton("Add Employee");
-        addEmployeeButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                // Implement the logic to add an employee here
-            }
-        });
-        menuPanel.add(addEmployeeButton);
-
-        frame.getContentPane().add(menuPanel, BorderLayout.NORTH);
-
-       
-
-        // Create a logout button
-        JButton logoutButton = new JButton("Logout");
-        logoutButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                // Dispose the current frame and show the login form
-                frame.dispose();
-                showLoginForm();
-            }
-        });
-
-        frame.getContentPane().add(logoutButton, BorderLayout.SOUTH);
-        
-        addDistrictPanel = createAddDistrictPanel();
-        contentPanel.add(addDistrictPanel, "addDistrict");
-        
-        
-     // Create the "Show District" panel
-        showDistrictPanel = createShowDistrictPanel();
-        contentPanel.add(showDistrictPanel, "showDistrict");
-
-
-
-
-        frame.setVisible(true);
-    }
-
-    private void showLoginForm() {
-        // Create a new instance of the LoginApp
-        LoginPage loginApp = new LoginPage();
-        // Make the login frame visible
-        loginApp.showPage();
-    }
-    
-    public void showPage() {
-        frame.setVisible(true);
-    }
-    
-    private  void hideTable() {
-    	if (contentPanel != null) {
-            contentPanel.setVisible(false);
-        }
 	}
-    
-    
-    private void showAddDistrictPanel() {
-        CardLayout cardLayout = (CardLayout) contentPanel.getLayout();
-        cardLayout.show(contentPanel, "addDistrict");
-    }
-    
-    private void showDistrictPanel() {
-        CardLayout cardLayout = (CardLayout) contentPanel.getLayout();
-        cardLayout.show(contentPanel, "showDistrict");
-    }
-    
-    
-    
-    
-    private JPanel createAddDistrictPanel() {
-        JPanel panel = new JPanel(new GridLayout(4, 2, 10, 10)); // Adjust layout as needed
 
-        JLabel lblDivision = new JLabel("Division:");
-        panel.add(lblDivision);
+	private void initialize() {
+		frame = new JFrame("Home Page");
+		contentPanel = new JPanel(new CardLayout());
+		frame.setBounds(100, 100, 1200, 600);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.getContentPane().setLayout(new BorderLayout());
+		frame.getContentPane().add(contentPanel, BorderLayout.CENTER);
+		tableDataModel = new DefaultTableModel(new String[] { "ID", "Division", "District" }, 0);
+		upazillaTableModel = new DefaultTableModel(new String[] {"ID", "Division", "District", "Upazilla"},0);
+				
+		
+		// Create a menu panel with buttons for different actions
+		menuPanel = new JPanel(new FlowLayout());
+		menuPanel.setBackground(new Color(255, 64, 255));
 
-        JComboBox<String> divisionDropdown = new JComboBox<>(new String[]{"Dhaka", "Chattogram", "Barishal"});
-        panel.add(divisionDropdown);
+		JButton addDistrictButton = new JButton("Add District");
+		addDistrictButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				showAddDistrictPanel();
+			}
+		});
+		menuPanel.add(addDistrictButton);
 
-        JLabel lblDistrict = new JLabel("District:");
-        panel.add(lblDistrict);
+		JButton showDistrictButton = new JButton("Show District");
+		showDistrictButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
 
-        JTextField districtField = new JTextField();
-        panel.add(districtField);
+				System.out.println("Pressed show District");
+				showDistrictPanel();
 
-        JButton btnSave = new JButton("Save");
-        btnSave.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                String selectedDivision = (String) divisionDropdown.getSelectedItem();
-                String districtName = districtField.getText();
-                
-                Random random = new Random();
-                int randomNumber = random.nextInt(1000);
-                
-                
-        	    model.addRow(new Object[]{randomNumber,selectedDivision, districtName});
-                
-                
-                System.out.println("Selected Division: " + selectedDivision);
-                System.out.println("District Name: " + districtName);
-                
-                showDistrictPanel();
-            }
-        });
-        panel.add(btnSave);
+			}
+		});
+		menuPanel.add(showDistrictButton);
 
-        JButton btnClear = new JButton("Clear");
-        btnClear.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                // Implement clear logic here
-                divisionDropdown.setSelectedIndex(0);
-                districtField.setText("");
-            }
-        });
-        panel.add(btnClear);
+		JButton addUpazillaButton = new JButton("Add Upazilla");
+		addUpazillaButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				showAddUpazilla();
+				// Implement the logic to add an upazilla here
 
-        return panel;
-    }
-    
-    
-    
-    private JPanel createShowDistrictPanel() {
-    	    JPanel panel = new JPanel(new BorderLayout());
+			}
+		});
+		menuPanel.add(addUpazillaButton);
 
-    	    // Create a non-editable dummy table model with data (replace with your data)
-    	    
-    	    model.addColumn("ID");
-    	    model.addColumn("Division");
-    	    model.addColumn("District");
+		JButton showUpazillaButton = new JButton("Show Upazilla");
+		showUpazillaButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				showUpazillaPanel();
+				// Implement the logic to show upazillas here
+			}
+		});
+		menuPanel.add(showUpazillaButton);
 
-    	    // Add some dummy data
-    	    model.addRow(new Object[]{1,"Chattogram", "Chattogram"});
-    	    model.addRow(new Object[]{2,"Chattogram", "Cox's Bazar"});
-    	    model.addRow(new Object[]{3,"Chattogram", "Mirsaray"});
-    	    model.addRow(new Object[]{4,"Chattogram", "Feni"});
-    	    model.addRow(new Object[]{5,"Chattogram", "Cumilla"});
+		JButton addEmployeeButton = new JButton("Add Employee");
+		addEmployeeButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				// Implement the logic to add an employee here
+			}
+		});
+		
+		menuPanel.add(addEmployeeButton);
+		
+		JButton showEmployeeButton = new JButton("Show Employee");
+		showEmployeeButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				// Implement the logic to add an employee here
+			}
+		});
+		menuPanel.add(showEmployeeButton);
 
-    	    table = new JTable(model);
-    	    table.setDefaultEditor(Object.class, null); // Make the table non-editable
-    	    JScrollPane scrollPane = new JScrollPane(table);
-    	    panel.add(scrollPane, BorderLayout.CENTER);
+		frame.getContentPane().add(menuPanel, BorderLayout.NORTH);
 
-    	    return panel;
-    	
+		// Create a logout button
+		JButton logoutButton = new JButton("Logout");
+		logoutButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				// Dispose the current frame and show the login form
+				frame.dispose();
+				showLoginForm();
+			}
+		});
 
-    }
+		frame.getContentPane().add(logoutButton, BorderLayout.SOUTH);
 
-    public static void main(String[] args) {
-        EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                try {
-                    AfterLoginPage window = new AfterLoginPage();
-                    window.frame.setVisible(true);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
+		DistrictAddPanel addDistrictPanel = new DistrictAddPanel(tableDataModel, this);
+		addDistrictPanel.setForeground(UIManager.getColor("Button.highlight"));
+		addDistrictPanel.setBackground(new Color(65, 65, 65));
+		contentPanel.add(addDistrictPanel, "addDistrict");
+
+//		// Create the "Show District" panel
+		ShowDistricts districtPanel = new ShowDistricts(tableDataModel);
+		districtPanel.setBackground(new Color(232, 156, 230));
+		contentPanel.add(districtPanel, "showDistrict");
+
+		// create the "Upazilla add form"
+		UpazillaFormPanel addUpazillaPanel = new UpazillaFormPanel(tableDataModel, this);
+		addUpazillaPanel.setForeground(UIManager.getColor("Button.highlight"));
+		addUpazillaPanel.setBackground(new Color(56, 56, 57));
+		contentPanel.add(addUpazillaPanel, "addUpazilla");
+
+		// create the "Upazilla show table"
+				ShowUpazilla showUpazillaTable = new ShowUpazilla(upazillaTableModel);
+				showUpazillaTable.setBackground(UIManager.getColor("CheckBox.foreground"));
+				contentPanel.add(showUpazillaTable, "showUpazilla");
+		
+		
+		frame.setVisible(true);
+	}
+
+	private void showLoginForm() {
+		// Create a new instance of the LoginApp
+		LoginPage loginApp = new LoginPage();
+		// Make the login frame visible
+		loginApp.showPage();
+	}
+
+	public void showPage() {
+		frame.setVisible(true);
+	}
+
+	private void showAddDistrictPanel() {
+		CardLayout cardLayout = (CardLayout) contentPanel.getLayout();
+		cardLayout.show(contentPanel, "addDistrict");
+	}
+
+	public void showDistrictPanel() {
+		
+		CardLayout cardLayout = (CardLayout) contentPanel.getLayout();
+		cardLayout.show(contentPanel, "showDistrict");
+		
+	}
+	
+public void showUpazillaPanel() {
+		CardLayout cardLayout = (CardLayout) contentPanel.getLayout();
+		cardLayout.show(contentPanel, "showUpazilla");
+		
+	}
+
+	private void showAddUpazilla() {
+		CardLayout cardLayout = (CardLayout) contentPanel.getLayout();
+		cardLayout.show(contentPanel, "addUpazilla");
+	};
+
+	
+
+
+	
 }
