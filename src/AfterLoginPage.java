@@ -10,7 +10,7 @@ public class AfterLoginPage {
 	private JFrame frame;
 	private JPanel menuPanel;
 	private JPanel contentPanel;
-	private DefaultTableModel tableDataModel;
+	private DefaultTableModel districtTableModel;
 	private DefaultTableModel upazillaTableModel;
 	private DefaultTableModel employeeTableModel;
 //    private JPanel addDistrictPanel;
@@ -27,7 +27,7 @@ public class AfterLoginPage {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(new BorderLayout());
 		frame.getContentPane().add(contentPanel, BorderLayout.CENTER);
-		tableDataModel = new DefaultTableModel(new String[] { "ID", "Division", "District" }, 0);
+		districtTableModel = new DefaultTableModel(new String[] { "ID", "Division", "District" }, 0);
 		upazillaTableModel = new DefaultTableModel(new String[] { "ID", "Division", "District", "Upazilla" }, 0);
 		employeeTableModel = new DefaultTableModel(
 				new String[] { "ID", "Name", "NID", "Division", "District", "Upazilla", "Email", "Photo" }, 0);
@@ -108,18 +108,18 @@ public class AfterLoginPage {
 
 		frame.getContentPane().add(logoutButton, BorderLayout.SOUTH);
 
-		DistrictAddPanel addDistrictPanel = new DistrictAddPanel(tableDataModel, this);
+		DistrictAddPanel addDistrictPanel = new DistrictAddPanel(districtTableModel, this);
 		addDistrictPanel.setForeground(UIManager.getColor("Button.highlight"));
 		addDistrictPanel.setBackground(new Color(65, 65, 65));
 		contentPanel.add(addDistrictPanel, "addDistrict");
 
 //		// Create the "Show District" panel
-		ShowDistricts districtPanel = new ShowDistricts(tableDataModel);
+		ShowDistricts districtPanel = new ShowDistricts(districtTableModel);
 		districtPanel.setBackground(new Color(232, 156, 230));
 		contentPanel.add(districtPanel, "showDistrict");
 
 		// create the "Upazilla add form"
-		UpazillaFormPanel addUpazillaPanel = new UpazillaFormPanel(tableDataModel, this);
+		UpazillaFormPanel addUpazillaPanel = new UpazillaFormPanel(upazillaTableModel, this);
 		addUpazillaPanel.setForeground(UIManager.getColor("Button.highlight"));
 		addUpazillaPanel.setBackground(new Color(56, 56, 57));
 		contentPanel.add(addUpazillaPanel, "addUpazilla");
