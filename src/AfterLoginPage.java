@@ -12,6 +12,7 @@ public class AfterLoginPage {
 	private JPanel contentPanel;
 	private DefaultTableModel tableDataModel;
 	private DefaultTableModel upazillaTableModel;
+	private DefaultTableModel employeeTableModel;
 //    private JPanel addDistrictPanel;
 
 	public AfterLoginPage() {
@@ -27,12 +28,13 @@ public class AfterLoginPage {
 		frame.getContentPane().setLayout(new BorderLayout());
 		frame.getContentPane().add(contentPanel, BorderLayout.CENTER);
 		tableDataModel = new DefaultTableModel(new String[] { "ID", "Division", "District" }, 0);
-		upazillaTableModel = new DefaultTableModel(new String[] {"ID", "Division", "District", "Upazilla"},0);
-				
-		
+		upazillaTableModel = new DefaultTableModel(new String[] { "ID", "Division", "District", "Upazilla" }, 0);
+		employeeTableModel = new DefaultTableModel(
+				new String[] { "ID", "Name", "NID", "Division", "District", "Upazilla", "Email", "Photo" }, 0);
+
 		// Create a menu panel with buttons for different actions
 		menuPanel = new JPanel(new FlowLayout());
-		menuPanel.setBackground(new Color(255, 64, 255));
+		menuPanel.setBackground(new Color(233, 204, 239));
 
 		JButton addDistrictButton = new JButton("Add District");
 		addDistrictButton.addActionListener(new ActionListener() {
@@ -78,13 +80,15 @@ public class AfterLoginPage {
 				// Implement the logic to add an employee here
 			}
 		});
-		
+
 		menuPanel.add(addEmployeeButton);
-		
+
 		JButton showEmployeeButton = new JButton("Show Employee");
 		showEmployeeButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				System.out.print("pressed");
+				showEmployee();
+
 				// Implement the logic to add an employee here
 			}
 		});
@@ -121,11 +125,15 @@ public class AfterLoginPage {
 		contentPanel.add(addUpazillaPanel, "addUpazilla");
 
 		// create the "Upazilla show table"
-				ShowUpazilla showUpazillaTable = new ShowUpazilla(upazillaTableModel);
-				showUpazillaTable.setBackground(UIManager.getColor("CheckBox.foreground"));
-				contentPanel.add(showUpazillaTable, "showUpazilla");
-		
-		
+		ShowUpazilla showUpazillaTable = new ShowUpazilla(upazillaTableModel);
+		showUpazillaTable.setBackground(UIManager.getColor("CheckBox.foreground"));
+		contentPanel.add(showUpazillaTable, "showUpazilla");
+
+		// show employee list
+		ShowEmployee employees = new ShowEmployee(employeeTableModel);
+		employees.setBackground(UIManager.getColor("CheckBox.foreground"));
+		contentPanel.add(employees, "showEmployee");
+
 		frame.setVisible(true);
 	}
 
@@ -146,16 +154,16 @@ public class AfterLoginPage {
 	}
 
 	public void showDistrictPanel() {
-		
+
 		CardLayout cardLayout = (CardLayout) contentPanel.getLayout();
 		cardLayout.show(contentPanel, "showDistrict");
-		
+
 	}
-	
-public void showUpazillaPanel() {
+
+	public void showUpazillaPanel() {
 		CardLayout cardLayout = (CardLayout) contentPanel.getLayout();
 		cardLayout.show(contentPanel, "showUpazilla");
-		
+
 	}
 
 	private void showAddUpazilla() {
@@ -163,8 +171,9 @@ public void showUpazillaPanel() {
 		cardLayout.show(contentPanel, "addUpazilla");
 	};
 
-	
+	public void showEmployee() {
+		CardLayout cardLayout = (CardLayout) contentPanel.getLayout();
+		cardLayout.show(contentPanel, "showEmployee");
+	}
 
-
-	
 }
