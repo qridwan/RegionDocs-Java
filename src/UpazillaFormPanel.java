@@ -1,10 +1,15 @@
-import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
-
-import java.awt.*;
+import java.awt.Color;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Random;
+
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.table.DefaultTableModel;
 
 public class UpazillaFormPanel extends JPanel {
     private static final long serialVersionUID = 1L;
@@ -35,7 +40,7 @@ public class UpazillaFormPanel extends JPanel {
         JLabel thanaLabel = new JLabel("Thana:");
         thanaLabel.setForeground(new Color(0, 0, 0));
         thanaTextField = new JTextField(20);
-        thanaTextField.setBackground(Color.LIGHT_GRAY);
+        thanaTextField.setBackground(Color.WHITE);
         saveButton = new JButton("Save");
         saveButton.setBackground(Color.GREEN);
         saveButton.setForeground(new Color(0, 0, 0));

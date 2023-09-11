@@ -1,9 +1,16 @@
-import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.CardLayout;
+import java.awt.Color;
+import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Random;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.UIManager;
+import javax.swing.table.DefaultTableModel;
 
 public class AfterLoginPage {
 
@@ -12,7 +19,7 @@ public class AfterLoginPage {
 	private JPanel contentPanel;
 	private DefaultTableModel districtTableModel;
 	private DefaultTableModel upazillaTableModel;
-	private DefaultTableModel employeeTableModel;
+	public DefaultTableModel employeeTableModel;
 //    private JPanel addDistrictPanel;
 
 	public AfterLoginPage() {
@@ -34,7 +41,8 @@ public class AfterLoginPage {
 
 		// Create a menu panel with buttons for different actions
 		menuPanel = new JPanel(new FlowLayout());
-		menuPanel.setBackground(new Color(233, 204, 239));
+		menuPanel.setForeground(Color.WHITE);
+		menuPanel.setBackground(Color.DARK_GRAY);
 
 		JButton addDistrictButton = new JButton("Add District");
 		addDistrictButton.addActionListener(new ActionListener() {
@@ -77,6 +85,7 @@ public class AfterLoginPage {
 		JButton addEmployeeButton = new JButton("Add Employee");
 		addEmployeeButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				showAddEmployee();
 				// Implement the logic to add an employee here
 			}
 		});
@@ -98,6 +107,9 @@ public class AfterLoginPage {
 
 		// Create a logout button
 		JButton logoutButton = new JButton("Logout");
+		logoutButton.setFont(new Font("Monaco", Font.PLAIN, 14));
+		logoutButton.setForeground(Color.RED);
+		logoutButton.setBackground(Color.PINK);
 		logoutButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// Dispose the current frame and show the login form
@@ -110,30 +122,39 @@ public class AfterLoginPage {
 
 		DistrictAddPanel addDistrictPanel = new DistrictAddPanel(districtTableModel, this);
 		addDistrictPanel.setForeground(UIManager.getColor("Button.highlight"));
-		addDistrictPanel.setBackground(new Color(65, 65, 65));
+		addDistrictPanel.setBackground(Color.LIGHT_GRAY);
 		contentPanel.add(addDistrictPanel, "addDistrict");
 
 //		// Create the "Show District" panel
 		ShowDistricts districtPanel = new ShowDistricts(districtTableModel);
-		districtPanel.setBackground(new Color(232, 156, 230));
+		districtPanel.setBackground(Color.LIGHT_GRAY);
 		contentPanel.add(districtPanel, "showDistrict");
 
 		// create the "Upazilla add form"
 		UpazillaFormPanel addUpazillaPanel = new UpazillaFormPanel(upazillaTableModel, this);
 		addUpazillaPanel.setForeground(UIManager.getColor("Button.highlight"));
-		addUpazillaPanel.setBackground(new Color(56, 56, 57));
+		addUpazillaPanel.setBackground(Color.LIGHT_GRAY);
 		contentPanel.add(addUpazillaPanel, "addUpazilla");
 
 		// create the "Upazilla show table"
 		ShowUpazilla showUpazillaTable = new ShowUpazilla(upazillaTableModel);
-		showUpazillaTable.setBackground(UIManager.getColor("CheckBox.foreground"));
+		showUpazillaTable.setBackground(Color.LIGHT_GRAY);
 		contentPanel.add(showUpazillaTable, "showUpazilla");
 
 		// show employee list
 		ShowEmployee employees = new ShowEmployee(employeeTableModel);
-		employees.setBackground(UIManager.getColor("CheckBox.foreground"));
+		employees.setBackground(Color.LIGHT_GRAY);
 		contentPanel.add(employees, "showEmployee");
 
+		
+		// create the "Add Employee"
+		AddEmployee addEmployee = new AddEmployee(this);
+		addEmployee.setForeground(Color.BLACK);
+		addEmployee.setBackground(Color.LIGHT_GRAY);
+		contentPanel.add(addEmployee, "addEmployee");
+
+		
+		
 		frame.setVisible(true);
 	}
 
@@ -154,7 +175,6 @@ public class AfterLoginPage {
 	}
 
 	public void showDistrictPanel() {
-
 		CardLayout cardLayout = (CardLayout) contentPanel.getLayout();
 		cardLayout.show(contentPanel, "showDistrict");
 
@@ -175,5 +195,10 @@ public class AfterLoginPage {
 		CardLayout cardLayout = (CardLayout) contentPanel.getLayout();
 		cardLayout.show(contentPanel, "showEmployee");
 	}
+	
+	private void showAddEmployee() {
+		CardLayout cardLayout = (CardLayout) contentPanel.getLayout();
+		cardLayout.show(contentPanel, "addEmployee");
+	};
 
 }

@@ -1,7 +1,16 @@
-import javax.swing.*;
-import java.awt.*;
+import java.awt.Color;
+import java.awt.EventQueue;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
+import javax.swing.UIManager;
 
 public class LoginPage {
 
@@ -28,7 +37,7 @@ public class LoginPage {
         
         textField = new JTextField();
         textField.setColumns(10);
-        textField.setBounds(142, 81, 215, 44);
+        textField.setBounds(142, 81, 220, 44);
         frame.getContentPane().add(textField);
 
         JLabel lblPassword = new JLabel("Password:");
@@ -41,8 +50,8 @@ public class LoginPage {
         frame.getContentPane().add(passwordField);
 
         JButton btnLogin = new JButton("Login");
-        btnLogin.setForeground(UIManager.getColor("Button.highlight"));
-        btnLogin.setBackground(UIManager.getColor("Button.shadow"));
+        btnLogin.setForeground(Color.BLACK);
+        btnLogin.setBackground(Color.WHITE);
         btnLogin.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 String username = textField.getText();
@@ -65,6 +74,11 @@ public class LoginPage {
         lblNewLabel.setForeground(UIManager.getColor("Button.highlight"));
         lblNewLabel.setBounds(140, 24, 231, 31);
         frame.getContentPane().add(lblNewLabel);
+        
+        JLabel lblNewLabel_1 = new JLabel("username: user password: pass");
+        lblNewLabel_1.setForeground(Color.LIGHT_GRAY);
+        lblNewLabel_1.setBounds(142, 242, 215, 16);
+        frame.getContentPane().add(lblNewLabel_1);
     }
 
     private boolean isValidLogin(String username, String password) {
