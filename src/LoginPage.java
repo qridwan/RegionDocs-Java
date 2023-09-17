@@ -59,6 +59,7 @@ public class LoginPage {
 
                 if (isValidLogin(username, password)) {
                     openAfterLoginPage();
+                    
                 } else {
                     // Display an error message when login fails
                     JOptionPane.showMessageDialog(frame, "Invalid username or password. Please try again.", "Login Error", JOptionPane.ERROR_MESSAGE);
@@ -83,7 +84,14 @@ public class LoginPage {
 
     private boolean isValidLogin(String username, String password) {
         // Replace this with your actual login validation logic
-        return username.equals("user") && password.equals("pass");
+    	DB_UTIL db = new DB_UTIL();
+    	
+    	int dbResult = db.checkUser(username, password);
+    	
+    	
+    	if(dbResult == 1) {
+    		return true;
+    	}else return false;
     }
 
     private void openAfterLoginPage() {

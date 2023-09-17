@@ -21,12 +21,15 @@ public class ShowUpazilla extends JPanel {
             model.addColumn("District");
             model.addColumn("Upazilla");
         }
+        
+        DB_UTIL db = new DB_UTIL();
+   	 model = db.getUpazilla();
 
         // Add some dummy data
-        model.addRow(new Object[]{1,"Dhaka", "Chattogram", "Cox's Bazar"});
-        model.addRow(new Object[]{3,"Chattogram", "Cox's Bazar", "Chakaria"});
-        model.addRow(new Object[]{34,"Barishal", "Bhola", "Char Fasson"});
-        model.addRow(new Object[]{222,"Dhaka", "Gazipur", "Kaliganj"});
+//        model.addRow(new Object[]{1,"Dhaka", "Chattogram", "Cox's Bazar"});
+//        model.addRow(new Object[]{3,"Chattogram", "Cox's Bazar", "Chakaria"});
+//        model.addRow(new Object[]{34,"Barishal", "Bhola", "Char Fasson"});
+//        model.addRow(new Object[]{222,"Dhaka", "Gazipur", "Kaliganj"});
 
         JTable table = new JTable(model);
         table.setBorder(new LineBorder(new Color(0, 0, 0)));

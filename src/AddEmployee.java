@@ -16,7 +16,8 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 public class AddEmployee extends JPanel {
-    private JTextField firstNameField;
+    private static final long serialVersionUID = 1L;
+	private JTextField firstNameField;
     private JTextField middleNameField;
     private JTextField lastNameField;
     private JTextField emailField;

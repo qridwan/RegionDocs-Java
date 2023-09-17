@@ -77,7 +77,6 @@ public class AfterLoginPage {
 		showUpazillaButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				showUpazillaPanel();
-				// Implement the logic to show upazillas here
 			}
 		});
 		menuPanel.add(showUpazillaButton);

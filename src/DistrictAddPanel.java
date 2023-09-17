@@ -16,12 +16,19 @@ public class DistrictAddPanel extends JPanel {
     private JComboBox<String> divisionDropdown;
     private JButton btnSave;
     private JButton btnClear;
+    
+   
 
     public DistrictAddPanel(DefaultTableModel model, AfterLoginPage parent) {
         setLayout(new GridLayout(4, 2, 10, 10)); // Adjust layout as needed
 
         JLabel lblDivision = new JLabel("Division:");
-        divisionDropdown = new JComboBox<>(new String[]{"Dhaka", "Chattogram", "Barishal"});
+        String[] list = new String[]{};
+        DB_UTIL db = new DB_UTIL();
+        
+        list = db.getDivisionList();
+        
+        divisionDropdown = new JComboBox<>(list);
 
         JLabel lblDistrict = new JLabel("District:");
         districtField = new JTextField();
@@ -34,6 +41,9 @@ public class DistrictAddPanel extends JPanel {
 
                 Random random = new Random();
                 int randomNumber = random.nextInt(1000);
+                
+                db.insertDistrict(selectedDivision, districtName);
+                db.getDivisionList();
 
                 model.addRow(new Object[]{randomNumber, selectedDivision, districtName});
                 parent.showDistrictPanel();
